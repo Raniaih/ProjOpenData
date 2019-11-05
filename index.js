@@ -21,6 +21,7 @@ fetch('https://devru-latitude-longitude-find-v1.p.rapidapi.com/latlon.php?locati
     .then(json => data = json)
     .then(data => console.log("lol"));
 
+app.get('/')
 
 app.listen(port, hostname, function(){
     console.log("Le serveur tourne sur http://"+ hostname +":"+ port +"\n")
