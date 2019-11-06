@@ -2,6 +2,7 @@ var express = require('express');
 var hostname = 'localhost';
 var port = 3000 ; 
 const fetch = require('node-fetch');
+var path = require('path');
  
 var app = express();
 
@@ -40,7 +41,7 @@ var app = express();
     // and then the program will PAUSE until it gets a reponse
         return data ;
    }  */
-function fetchDevruJson(location = 'Paris'){
+/* function fetchDevruJson(location = 'Paris'){
     
     return fetch('https://devru-latitude-longitude-find-v1.p.rapidapi.com/latlon.php?location='+location, {
         
@@ -57,7 +58,24 @@ function fetchDevruJson(location = 'Paris'){
         
 
 }
+ */
+function fetchCountryJson(location = 'Tunisia'){
+    
+    return fetch('https://restcountries.eu/rest/v2/all?location='+location, {
+        
+            method: "GET",
+            headers: {
+                "fbclid": "IwAR31ioi18aNteQ_PMek9Zg6Z2K_YJpaa_vE05nrJKVszR1I00iKcVh4GhVU",
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(res => res.json())
+        .then(json => data = json['Results']);
 
+        
+
+}
+ 
 function fetchWeatherJson(data){
 
     lat = data.lat;
@@ -83,7 +101,7 @@ function fetchWeatherJson(data){
 
 //fetchDevruJson('Alger').then(data => fetchWeatherJson(data))
 
-fetchDevruJson('Alger').then(data => console.log(data))
+//fetchDevruJson('Alger').then(data => console.log(data))
 
 //fetchWeatherJson(fetchDevruJson().then(data => {return data})).then(data => console.log(data));
 
@@ -98,7 +116,20 @@ fetchDevruJson('Alger').then(data => console.log(data))
 //const data1 = await getTodosAsync();
 
 //console.log(data1);
+app.get('/', function(req, res){
+    res.sendFile(path.join(__dirname + '/accueil.html'))
+});
 
+
+/* app.get('/villes', function(req,res) {
+	fs.readFile('index.html', function(err, html) {
+	if(err){throw err;}
+	res.writeHead(200, {'Content-Type': 'text/html'})
+            res.write(html)
+            res.end()
+	})
+
+}) */
 app.listen(port, hostname, function(){
     console.log("Le serveur tourne sur http://"+ hostname +":"+ port +"\n")
 });
