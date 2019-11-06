@@ -81,10 +81,12 @@ app.get('/villes', function(req,res) {
 
 app.get('/villes/:ville', function(req, res){
 
-    fetchCountryJson(req.params.ville).then(data => fetchWeatherJson(data.latlng).then(data => console.log(data))) ;
+    fetchCountryJson(req.params.ville).then(data => fetchWeatherJson(data.latlng).then(data => res.send(data))) ;
 }) ;
 
 
 app.listen(port, hostname, function(){
     console.log("Le serveur tourne sur http://"+ hostname +":"+ port +"\n")
 });
+
+

@@ -1,20 +1,62 @@
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>index</title>
+     <style>
+.grid-container {
+  display: grid;
+  grid-gap: 10px;
+  background-color: skyblue;
+  padding: 10px;
+}
+
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 20px;
+  font-size: 30px;
+}
+
+.item1 {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+}
+
+.item2 {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.item5 {
+  grid-column: 1 / span 3;
+  grid-row: 3;
+}
+</style>
+
   </head>
   <body>
 
- 
 	<br>
-<FORM  NAME="Choix">
-<SELECT name="country" id="country" size="1" onChange="envoie()">
 
-</SELECT>
+<h1 align="center">What's the weather today?!</h1>
+
+<div class="grid-container">
+  <div class="grid-item item1"> Let's choose a country!
+  	<FORM  NAME="Choix">
+		<SELECT name="country" id="country" size="1" onChange="envoie()">
+		</SELECT>
+	</FORM>
+	</div>
+  <div class="grid-item item2">Image de la ville/pays</div>
+  <div class="grid-item item3">Capital</div>  
+  <div class="grid-item item4" id="villes"></div>
+  <div class="grid-item item5">Weather</div>
+</div>
+
 </FORM>
 
-<script> 	 
+<script> 
+var dico ={};	 
 var url= 'http://localhost:3000/villes';
 fetch(url,{ 
 	method : 'GET'})
@@ -28,6 +70,7 @@ fetch(url,{
 						option = document.createElement("OPTION");
 						option.textContent=country[i]["name"];
 						document.getElementById("country").appendChild(option);
+						 dico[country[i]["name"]]=country[i]["capital"];
 					}
 	 
   
@@ -35,18 +78,47 @@ fetch(url,{
             });
     });
  /// cree les balises options  qui permette de faire une liste déroulante pour chaque fois. Je crais la balise puis je la stocke dans option ,je definis ses valeur puis je l'associe a un element du json
-	
+
+var dico ={};
+var choix="";
+var country = [];
+ var myHeaders = new Headers();
+	 var myInit = { method : 'GET' ,headers : myHeaders, Accept : 'JSON'};
+	 var url=  'https://restcountries.eu/rest/v2/all';
+
+fetch(url,myInit)
+    .then(function (response) {
+        response.json()
+            .then(function (value) {
+                country=value;
+				for(var i= 0; i < country.length; i++)
+		{
+		 option = document.createElement("OPTION");
+		 var a = document.createAttribute("id");
+		 var num = i+1;
+		 a.value = "val"+num.toString();
+		 option.setAttributeNode(a);
+		 option.textContent=country[i]["name"];
+		 document.getElementById("country").appendChild(option);
+		  dico[country[i]["name"]]=country[i]["capital"];
+		//a.push(country[i]["name"]);
+		}
+	 
   
+				
+            });
+    });
+	
 	
 function envoie() 
 		{ 
 			 ///fonction qui envoie le choix de l'utilisateur au serveur local qui écoute sur le port 3000 
 			var choix =  document.getElementById("country").value;
+			document.getElementById("villes").textContent= dico[choix];
 		
 			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(function(res){
-				console.log(res)
+				 res.json().then(data=> meteo=data)
 			});
-			 
 	
 	 
 	 }
