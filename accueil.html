@@ -14,13 +14,11 @@
 </SELECT>
 </FORM>
 
-<script> 
-var country = [];
-
-var myInit = { method : 'GET'};
-	 
+<script> 	 
 var url= 'http://localhost:3000/villes';
-fetch(url,myInit)
+fetch(url,{ 
+	method : 'GET'})
+
     .then(function (response) {
         response.json()
             .then(function (value) {
@@ -28,10 +26,6 @@ fetch(url,myInit)
 				for(var i= 0; i < country.length; i++)
 		{
 		 option = document.createElement("OPTION");
-		 var a = document.createAttribute("id");
-		 var num = i+1;
-		 a.value = "val"+num.toString();
-		 option.setAttributeNode(a);
 		 option.textContent=country[i]["name"];
 		 document.getElementById("country").appendChild(option);
 		//a.push(country[i]["name"]);

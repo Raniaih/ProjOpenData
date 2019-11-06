@@ -76,6 +76,9 @@ function fetchCountryJson(location = 'Tunisia'){
 
 };
  
+fetchCountryJson().then(data => console.log(data));
+
+
 function fetchWeatherJson(latlng){
 
     lat = latlng[0];
@@ -83,7 +86,6 @@ function fetchWeatherJson(latlng){
 
     console.log(lat, lon);
 
-    console.log('zksdfjhksjdhfkjsdhfkjshdfs', lat, lon)
     var weather = {
         api_key : '8071de965194a0e896b16b413dab8b48',
     };
@@ -149,7 +151,7 @@ app.get('/villes', function(req,res) {
 
 app.get('/villes/:ville', function(req, res){
 
-    fetchCountryJson(req.params.ville).then(data => fetchWeatherJson(data.latlng).then(data => res.send(console.log(data['hourly']['data'])))) ;
+    fetchCountryJson(req.params.ville).then(data => fetchWeatherJson(data.latlng).then(data => res.send(console.log(data['daily']['data'])))) ;
 }) ;
 app.listen(port, hostname, function(){
     console.log("Le serveur tourne sur http://"+ hostname +":"+ port +"\n")
