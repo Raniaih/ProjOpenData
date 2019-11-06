@@ -43,7 +43,9 @@ function envoie()
 			 ///fonction qui envoie le choix de l'utilisateur au serveur local qui écoute sur le port 3000 
 			var choix =  document.getElementById("country").value;
 		
-			fetch("http://localhost:3000/villes/"+choix, {method : 'GET'});
+			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(function(res){
+				console.log(res)
+			});
 			 
 	
 	 
