@@ -21,15 +21,14 @@ fetch(url,{
 
     .then(function (response) {
         response.json()
-            .then(function (value) {
-                country=value;
+            .then(function (country) {
+
 				for(var i= 0; i < country.length; i++)
-		{
-		 option = document.createElement("OPTION");
-		 option.textContent=country[i]["name"];
-		 document.getElementById("country").appendChild(option);
-		//a.push(country[i]["name"]);
-		}
+					{
+						option = document.createElement("OPTION");
+						option.textContent=country[i]["name"];
+						document.getElementById("country").appendChild(option);
+					}
 	 
   
 				
