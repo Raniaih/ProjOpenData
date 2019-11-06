@@ -61,7 +61,7 @@ var app = express();
  */
 function fetchCountryJson(location = 'Tunisia'){
     
-    return fetch('https://restcountries.eu/rest/v2/all?location='+location, {
+    return fetch('https://restcountries.eu/rest/v2/name/'+location+'?fullText=true'    , {
         
             method: "GET",
             headers: {
@@ -70,24 +70,27 @@ function fetchCountryJson(location = 'Tunisia'){
             },
         })
         .then(res => res.json())
-        .then(json => data = json['Results']);
+        .then(data => data[0]);
 
         
 
-}
+};
  
-function fetchWeatherJson(data){
+function fetchWeatherJson(latlng){
 
-    lat = data.lat;
-    lon = data.lon;
-    console.log('zksdfjhksjdhfkjsdhfkjshdfs', data, lat, lon)
+    lat = latlng[0];
+    lon = latlng[1];
+
+    console.log(lat, lon);
+
+    console.log('zksdfjhksjdhfkjsdhfkjshdfs', lat, lon)
     var weather = {
         api_key : '8071de965194a0e896b16b413dab8b48',
     };
 
    
 
-    fetch('https://api.darksky.net/forecast/'+weather.api_key+'/'+lat+','+lon, {
+    return fetch('https://api.darksky.net/forecast/'+weather.api_key+'/'+lat+','+lon, {
 
             method : "GET",
             headers: {
@@ -95,9 +98,9 @@ function fetchWeatherJson(data){
             },
     })
         .then(res => res.json())
-        .then(data => console.log(data));
+        .then(data => {return data});
 
-}
+};
 
 //fetchDevruJson('Alger').then(data => fetchWeatherJson(data))
 
@@ -111,6 +114,8 @@ function fetchWeatherJson(data){
 //console.log(getTodosAsync)       
 
 //data2= apiGetAll()
+
+
 
 
 //const data1 = await getTodosAsync();
@@ -132,11 +137,20 @@ function fetchListePays(){
 
 }
 
+//fetchCountryJson('Algeria').then(data => fetchWeatherJson(data.latlng).then(data => console.log(data)));
+
+
+//fetchWeatherJson([28,3]).then(data => console.log(data));
 
 app.get('/villes', function(req,res) {
     fetchListePays().then(data => res.send(data));
 
 }); 
+
+app.get('/villes/:ville', function(req, res){
+
+    fetchCountryJson(req.params.ville).then(data => fetchWeatherJson(data.latlng).then(data => res.send(console.log(data['hourly']['data'])))) ;
+}) ;
 app.listen(port, hostname, function(){
     console.log("Le serveur tourne sur http://"+ hostname +":"+ port +"\n")
 });

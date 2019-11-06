@@ -16,8 +16,8 @@
 
 <script> 
 var country = [];
- var myHeaders = new Headers();
-	 var myInit = { method : 'GET'};
+
+var myInit = { method : 'GET'};
 	 
 var url= 'http://localhost:3000/villes';
 fetch(url,myInit)
@@ -49,8 +49,8 @@ function envoie()
 		{ 
 			 ///fonction qui envoie le choix de l'utilisateur au serveur local qui écoute sur le port 3000 
 			var choix =  document.getElementById("country").value;
-			console.log(choix);
-			fetch("http://localhost:3000/ville/"+choix);
+		
+			fetch("http://localhost:3000/villes/"+choix, {method : 'GET'});
 			 
 	
 	 
