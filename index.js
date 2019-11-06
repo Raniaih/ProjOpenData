@@ -120,16 +120,23 @@ app.get('/', function(req, res){
     res.sendFile(path.join(__dirname + '/accueil.html'))
 });
 
+function fetchListePays(){
+    var url=  'https://restcountries.eu/rest/v2/all';
+    return fetch(url, {
 
-/* app.get('/villes', function(req,res) {
-	fs.readFile('index.html', function(err, html) {
-	if(err){throw err;}
-	res.writeHead(200, {'Content-Type': 'text/html'})
-            res.write(html)
-            res.end()
-	})
+        method : "GET",
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+    }).then(res => res.json())
 
-}) */
+}
+
+
+app.get('/villes', function(req,res) {
+    fetchListePays().then(data => res.send(data));
+
+}); 
 app.listen(port, hostname, function(){
     console.log("Le serveur tourne sur http://"+ hostname +":"+ port +"\n")
 });

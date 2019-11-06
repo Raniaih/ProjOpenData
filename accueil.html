@@ -17,10 +17,9 @@
 <script> 
 var country = [];
  var myHeaders = new Headers();
-	 var myInit = { method : 'GET' ,headers : myHeaders, Accept : 'JSON'};
-	 var url=  'https://restcountries.eu/rest/v2/all';
-  
-
+	 var myInit = { method : 'GET'};
+	 
+var url= 'http://localhost:3000/villes';
 fetch(url,myInit)
     .then(function (response) {
         response.json()
