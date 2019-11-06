@@ -1,0 +1,65 @@
+
+ <!DOCTYPE html>
+<html>
+  <head>
+    <title>index</title>
+  </head>
+  <body>
+
+ 
+	<br>
+<FORM  NAME="Choix">
+<SELECT name="country" id="country" size="1" onChange="envoie()">
+
+</SELECT>
+</FORM>
+
+<script> 
+var country = [];
+ var myHeaders = new Headers();
+	 var myInit = { method : 'GET' ,headers : myHeaders, Accept : 'JSON'};
+	 var url=  'https://restcountries.eu/rest/v2/all';
+  
+
+fetch(url,myInit)
+    .then(function (response) {
+        response.json()
+            .then(function (value) {
+                country=value;
+				for(var i= 0; i < country.length; i++)
+		{
+		 option = document.createElement("OPTION");
+		 var a = document.createAttribute("id");
+		 var num = i+1;
+		 a.value = "val"+num.toString();
+		 option.setAttributeNode(a);
+		 option.textContent=country[i]["name"];
+		 document.getElementById("country").appendChild(option);
+		//a.push(country[i]["name"]);
+		}
+	 
+  
+				
+            });
+    });
+ /// cree les balises options  qui permette de faire une liste déroulante pour chaque fois. Je crais la balise puis je la stocke dans option ,je definis ses valeur puis je l'associe a un element du json
+	
+  
+	
+function envoie() 
+		{ 
+			 ///fonction qui envoie le choix de l'utilisateur au serveur local qui écoute sur le port 3000 
+			var choix =  document.getElementById("country").value;
+			console.log(choix);
+			fetch("http://localhost:3000/ville/"+choix);
+			 
+	
+	 
+	 }
+	  
+</script>
+
+
+ 
+  </body>
+</html>
