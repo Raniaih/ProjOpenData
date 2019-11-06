@@ -38,7 +38,7 @@
 
 	<br>
 
-<h1 align="center">What's the weather today?!</h1>
+<h1>What's the weather today?!</h1>
 
 <div class="grid-container">
   <div class="grid-item item1"> Let's choose a country!
@@ -50,12 +50,13 @@
   <div class="grid-item item2">Image de la ville/pays</div>
   <div class="grid-item item3">Capital</div>  
   <div class="grid-item item4" id="villes"></div>
-  <div class="grid-item item5">Weather</div>
+  <div class="grid-item item5" id="indic">Weather</div>
 </div>
 
 </FORM>
 
 <script> 
+var indicateur="";
 var dico ={};	 
 var url= 'http://localhost:3000/villes';
 fetch(url,{ 
@@ -109,6 +110,7 @@ fetch(url,myInit)
             });
     });
 	
+	 
 	
 function envoie() 
 		{ 
@@ -117,11 +119,17 @@ function envoie()
 			document.getElementById("villes").textContent= dico[choix];
 		
 			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(function(res){
-				 res.json().then(data=> meteo=data)
+				 res.json().then(data=> meteo=data )
+							.then(data=> indicateur ="At  "+ convert(meteo["currently"]["time"])+ ". Summary: "+meteo["currently"]["summary"]  +" . And humidity  is "+ meteo["currently"]["humidity"]        )
 			});
-	
+			
+			document.getElementById("indic").textContent=indicateur;
 	 
 	 }
+	 function convert(x){
+			var theDate = new Date(x* 1000);
+			dateString = theDate.toGMTString();
+		return dateString}
 	  
 </script>
 
