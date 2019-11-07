@@ -76,7 +76,7 @@ fetch(url,{
 						option.textContent=country[i]["name"];
 						document.getElementById("country").appendChild(option);
 						 dico[country[i]["name"]]=country[i]["capital"];
-						  
+						 dico2[ country[i]["name"] ]=country[i]["alpha2Code"].toLowerCase();
 					}
 	 
   
@@ -85,35 +85,8 @@ fetch(url,{
     });
  /// cree les balises options  qui permette de faire une liste déroulante pour chaque fois. Je crais la balise puis je la stocke dans option ,je definis ses valeur puis je l'associe a un element du json
 
-var dico ={};
-var choix="";
-var country = [];
- var myHeaders = new Headers();
-	 var myInit = { method : 'GET' ,headers : myHeaders, Accept : 'JSON'};
-	 var url=  'https://restcountries.eu/rest/v2/all';
 
-fetch(url,myInit)
-    .then(function (response) {
-        response.json()
-            .then(function (value) {
-                country=value;
-				for(var i= 0; i < country.length; i++)
-		{
-		 option = document.createElement("OPTION");
-		 var a = document.createAttribute("id");
-		 var num = i+1;
-		 a.value = "val"+num.toString();
-		 option.setAttributeNode(a);
-		 option.textContent=country[i]["name"];
-		 document.getElementById("country").appendChild(option);
-		 dico[country[i]["name"]]=country[i]["capital"] ;
-		 dico2[ country[i]["name"] ]=country[i]["alpha2Code"].toLowerCase();
-		}
-	 
-  
-				
-            });
-    });
+
 	function convert(x){
 			var theDate = new Date(x* 1000);
 			dateString = theDate.toGMTString();
@@ -133,14 +106,9 @@ function envoie()
 			document.getElementById("villes").textContent="";
 			document.getElementById("villes").textContent= dico[choix];
 		
-<<<<<<< HEAD
 			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(function(res){
 				 res.json().then(data=> document.getElementById("indic").textContent="At  "+ convert(data["currently"]["time"])+ ". Summary: "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"]        )
 							
-=======
-			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'application/json'}}).then(function(res){
-				 res.then(data=> document.getElementById("indic").textContent="At  "+ convert(data["currently"]["time"])+ ". Summary: "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"]        )
->>>>>>> c70b4866d50a3563d2024288cb4df42f598bc703
 			});
 			
 	 
