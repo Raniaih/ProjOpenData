@@ -34,6 +34,10 @@
 </style>
 
   </head>
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
   <body>
 
 	<br>
@@ -108,8 +112,16 @@ function readJSON(choix){
   
 }    
 
-function readXML(){
-  return 
+function readXML(choix){
+
+  parser = new DOMParser();
+  
+  return fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(response =>
+    response.text()).then(res =>
+        console.log(res)
+    );
+					
+			
 }
 function envoie() 
 		{ 
@@ -130,7 +142,7 @@ function envoie()
         readJSON(choix);
       }
       else{
-        readXML(choix)
+        readXML(choix);
       }
 			
 			
