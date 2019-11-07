@@ -56,7 +56,9 @@
 </div>
 
 </FORM>
-
+<div id="response">
+	data : <div id=datacontent><%= JSON.stringify(data.json)%></div>
+</div>
 <script> 
 var dico2={};
 var meteo;
@@ -106,7 +108,7 @@ function envoie()
 			document.getElementById("villes").textContent="";
 			document.getElementById("villes").textContent= dico[choix];
 		
-			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'application/json'}}).then(function(res){
+			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(function(res){
 				 res.json().then(data=> document.getElementById("indic").textContent="At  "+ convert(data["currently"]["time"])+ ". Summary: "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"]        )
 					
 			});
