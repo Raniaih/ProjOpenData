@@ -122,8 +122,8 @@ function envoie()
 			var choix =  document.getElementById("country").value;
 			document.getElementById("villes").textContent= dico[choix];
 		
-			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(function(res){
-				 res.json().then(data=> document.getElementById("indic").textContent="At  "+ convert(data["currently"]["time"])+ ". Summary: "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"]        )
+			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'application/json'}}).then(function(res){
+				 res.then(data=> document.getElementById("indic").textContent="At  "+ convert(data["currently"]["time"])+ ". Summary: "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"]        )
 			});
 			
 	 
