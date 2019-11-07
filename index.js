@@ -76,7 +76,9 @@ app.use(function(req, res, next) {
         res.send(obj);
       } else if (req.accepts('text/xml')) {
         res.header('Content-Type', 'text/xml');
+        res.type('application/xml');
         var res_xml = convert.json2xml( obj, options);
+        console.log(res_xml);
         res.send(res_xml);
       } else {
         res.sendStatus(406);

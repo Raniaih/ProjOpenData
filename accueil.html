@@ -14,6 +14,10 @@
 
 
   </head>
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
   <body>
 
 	<!-- Header -->
@@ -37,6 +41,7 @@
 		<SELECT name="country" id="country" size="1" onChange="envoie()">
 		</SELECT>
 	</FORM>
+<<<<<<< HEAD
 										<!-- Text stuff -->
 											
 											<hr />
@@ -91,9 +96,26 @@
 
 
 
+=======
+	</div>
+  <div class="grid-item item2">Image de la ville/pays <br>    <img id="flag" src="">    </div> 
+  
+  <div class="grid-item item3">Capital</div>  
+  <div class="grid-item item4" id="villes"></div>
+  <div class="grid-item item5" id="indic">Weather</div>
+  <div class="grid-item item6">
+  <FORM>
+  <INPUT type= "radio" name="radioFormat" value="json" onclick="envoie()" checked="checked"> json </INPUT>
+  <INPUT type= "radio"  name="radioFormat" value="xml" onclick="envoie()" > xml </INPUT>
+  </FORM>
+  </div>
+  </div>
+>>>>>>> 4a0bf22a3b24a4922035d489a07f04809df84949
 
 </FORM>
-
+<div id="response">
+	data : <div id="datacontent"></div>
+</div>
 <script> 
 var dico2={};
 var meteo;
@@ -129,7 +151,26 @@ fetch(url,{
 			dateString = theDate.toGMTString();
 		return dateString}
 	 
-	
+
+function readJSON(choix){ 
+  return fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'application/json'}}).then(function(res){
+          res.json().then(data=> document.getElementById("indic").textContent="At  "+ convert(data["currently"]["time"])+ ". Summary: "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"]        )
+					
+			});
+  
+}    
+
+function readXML(choix){
+
+  parser = new DOMParser();
+  
+  return fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(response =>
+    response.text()).then(res => 
+        res = '<root> ' + res  + ' </root>'
+    ).then(data =>console.log(  convert($.parseXML(data).getElementsByTagName("currently")[0].childNodes[0].nodeValue   )                                       )  )   ;
+					
+			
+}
 function envoie() 
 		{ 
 			 var choix =  document.getElementById("country").value;
@@ -142,14 +183,28 @@ function envoie()
 			document.getElementById("indic").textContent="";
 			document.getElementById("villes").textContent="";
 			document.getElementById("villes").textContent= dico[choix];
-		
-			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'application/json'}}).then(function(res){
-				 res.json().then(data=> document.getElementById("indic").textContent="At  "+ convert(data["currently"]["time"])+ ". Summary: "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"]        )
-					
-			});
+      
+      radioFormat = document.querySelector('input[name="radioFormat"]:checked').value;
+
+      if (radioFormat == 'json'){
+        readJSON(choix);
+      }
+      else{
+        readXML(choix);
+      }
+			
 			
 	 
 	 }
+
+
+
+
+
+
+
+
+
 	  
 </script>
 
