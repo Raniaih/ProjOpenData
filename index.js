@@ -73,10 +73,10 @@ app.use(function(req, res, next) {
       if (req.accepts('json') || req.accepts('text/html')) {
         res.header('Content-Type', 'application/json');
         res.send(obj);
-      } else if (req.accepts('application/xml')) {
+      } else if (req.accepts('text/xml')) {
         res.header('Content-Type', 'text/xml');
         var res_xml = convert.json2xml( obj, options);
-        res.send(xml);
+        res.send(res_xml);
       } else {
         res.sendStatus(406);
       }
