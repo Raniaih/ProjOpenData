@@ -5,6 +5,7 @@ const fetch = require('node-fetch');
 const path = require('path');
 var convert = require('xml-js');
 var app = express();
+var fs= require('fs');
 
 
 function fetchCountryJson(location = 'Tunisia'){
@@ -84,9 +85,17 @@ app.use(function(req, res, next) {
     next();
 });
 //fetchCountryJson('Algeria').then(data => fetchWeatherJson(data.latlng).then(data => console.log(data)));
+app.use(express.static('assets'));
 
-
-//fetchWeatherJson([28,3]).then(data => console.log(data));
+/*//fetchWeatherJson([28,3]).then(data => console.log(data));
+app.get('/assets/css/main.css', function(req,res) {
+    fs.readFile('assets/css/main.css', function(err, css) {
+    if(err){throw err;}
+    res.writeHead(200, {'Content-Type': 'text/css'})
+            res.write(css)
+            res.end()
+    })
+});*/
 
 app.get('/villes', function(req,res) {
     fetchListePays().then(data => res.send(data))
@@ -103,3 +112,4 @@ app.get('/villes/:ville', function(req, res){
 app.listen(port, hostname, function(){
     console.log("Le serveur tourne sur http://"+ hostname +":"+ port +"\n")
 });
+
