@@ -41,7 +41,7 @@
 		<SELECT name="country" id="country" size="1" onChange="envoie()">
 		</SELECT>
 	</FORM>
-<<<<<<< HEAD
+
 										<!-- Text stuff -->
 											
 											<hr />
@@ -78,6 +78,10 @@
 												
 											</ul>
 											
+											<FORM>
+  <INPUT type= "radio" name="radioFormat" value="json" onclick="envoie()" checked="checked"> json </INPUT>
+  <INPUT type= "radio"  name="radioFormat" value="xml" onclick="envoie()" > xml </INPUT>
+  </FORM>
 										
 												</div>
 											</div>
@@ -88,34 +92,16 @@
 
 						</div>
 					</div>
-
-
-
-</section>
-
-
-
-
-=======
 	</div>
-  <div class="grid-item item2">Image de la ville/pays <br>    <img id="flag" src="">    </div> 
-  
-  <div class="grid-item item3">Capital</div>  
-  <div class="grid-item item4" id="villes"></div>
-  <div class="grid-item item5" id="indic">Weather</div>
-  <div class="grid-item item6">
-  <FORM>
-  <INPUT type= "radio" name="radioFormat" value="json" onclick="envoie()" checked="checked"> json </INPUT>
-  <INPUT type= "radio"  name="radioFormat" value="xml" onclick="envoie()" > xml </INPUT>
-  </FORM>
   </div>
   </div>
->>>>>>> 4a0bf22a3b24a4922035d489a07f04809df84949
 
 </FORM>
 <div id="response">
-	data : <div id="datacontent"></div>
+	 <div id="datacontent"></div>
 </div>
+
+  </section>
 <script> 
 var dico2={};
 var meteo;
@@ -137,9 +123,7 @@ fetch(url,{
 						 dico[country[i]["name"]]=country[i]["capital"];
 						 dico2[ country[i]["name"] ]=country[i]["alpha2Code"].toLowerCase();
 					}
-	 
-  
-				
+	 				
             });
     });
  /// cree les balises options  qui permette de faire une liste déroulante pour chaque fois. Je crais la balise puis je la stocke dans option ,je definis ses valeur puis je l'associe a un element du json
@@ -196,14 +180,6 @@ function envoie()
 			
 	 
 	 }
-
-
-
-
-
-
-
-
 
 	  
 </script>
