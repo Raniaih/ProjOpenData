@@ -133,9 +133,14 @@ function envoie()
 			document.getElementById("villes").textContent="";
 			document.getElementById("villes").textContent= dico[choix];
 		
+<<<<<<< HEAD
 			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(function(res){
 				 res.json().then(data=> document.getElementById("indic").textContent="At  "+ convert(data["currently"]["time"])+ ". Summary: "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"]        )
 							
+=======
+			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'application/json'}}).then(function(res){
+				 res.then(data=> document.getElementById("indic").textContent="At  "+ convert(data["currently"]["time"])+ ". Summary: "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"]        )
+>>>>>>> c70b4866d50a3563d2024288cb4df42f598bc703
 			});
 			
 	 

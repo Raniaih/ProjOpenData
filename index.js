@@ -2,9 +2,8 @@ var express = require('express');
 var hostname = 'localhost';
 var port = 3000 ; 
 const fetch = require('node-fetch');
-var path = require('path');
-var jsonToCsv = require('convert-json-to-csv');
- 
+const path = require('path');
+var convert = require('xml-js');
 var app = express();
 
 
@@ -25,7 +24,7 @@ function fetchCountryJson(location = 'Tunisia'){
 
 };
  
-
+fetchCountryJson();
 
 function fetchWeatherJson(latlng){
 
@@ -47,8 +46,7 @@ function fetchWeatherJson(latlng){
                 'Content-Type' : 'application/json'
             },
     })
-        .then(res => res.json())
-        .then(data => {return data});
+        .then(res => res.json());
 
 };
 
@@ -69,6 +67,22 @@ function fetchListePays(){
 
 }
 
+app.use(function(req, res, next) {
+    var options = {compact: true, ignoreComment: true, spaces: 4};
+    res.sendData = function(obj) {
+      if (req.accepts('json') || req.accepts('text/html')) {
+        res.header('Content-Type', 'application/json');
+        res.send(obj);
+      } else if (req.accepts('application/xml')) {
+        res.header('Content-Type', 'text/xml');
+        var res_xml = convert.json2xml( obj, options);
+        res.send(xml);
+      } else {
+        res.sendStatus(406);
+      }
+    };
+    next();
+});
 //fetchCountryJson('Algeria').then(data => fetchWeatherJson(data.latlng).then(data => console.log(data)));
 
 
@@ -81,9 +95,8 @@ app.get('/villes', function(req,res) {
 }); 
 
 app.get('/villes/:ville', function(req, res){
-
-    fetchCountryJson(req.params.ville).then(data => fetchWeatherJson(data.latlng).then(data => res.send(data)   )
-																				.then(data=> console.log(data))) ;
+    
+    fetchCountryJson(req.params.ville).then(data => fetchWeatherJson(data.latlng).then(data => res.sendData(data))) ;
 }) ;
 
 
