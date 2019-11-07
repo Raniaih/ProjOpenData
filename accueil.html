@@ -54,15 +54,15 @@
   <div class="grid-item item5" id="indic">Weather</div>
   <div class="grid-item item6">
   <FORM>
-  <INPUT type= "radio" name="fichier" value="json" onclick="javascript:jsonDown('json')"> json </INPUT>
-  <INPUT type= "radio" name="fichier" value="xml" onclick="javascript:xmlDown('xml')" > xml </INPUT>
+  <INPUT type= "radio" name="radioFormat" value="json" onclick="envoie()" checked="checked"> json </INPUT>
+  <INPUT type= "radio"  name="radioFormat" value="xml" onclick="envoie()" > xml </INPUT>
   </FORM>
   </div>
   </div>
 
 </FORM>
 <div id="response">
-	data : <div id=datacontent><%= JSON.stringify(data.json)%></div>
+	data : <div id="datacontent"></div>
 </div>
 <script> 
 var dico2={};
@@ -99,7 +99,18 @@ fetch(url,{
 			dateString = theDate.toGMTString();
 		return dateString}
 	 
-	
+
+function readJSON(choix){ 
+  return fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'application/json'}}).then(function(res){
+          res.json().then(data=> document.getElementById("indic").textContent="At  "+ convert(data["currently"]["time"])+ ". Summary: "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"]        )
+					
+			});
+  
+}    
+
+function readXML(){
+  return 
+}
 function envoie() 
 		{ 
 			 var choix =  document.getElementById("country").value;
@@ -112,11 +123,16 @@ function envoie()
 			document.getElementById("indic").textContent="";
 			document.getElementById("villes").textContent="";
 			document.getElementById("villes").textContent= dico[choix];
-		
-			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(function(res){
-				 res.json().then(data=> document.getElementById("indic").textContent="At  "+ convert(data["currently"]["time"])+ ". Summary: "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"]        )
-					
-			});
+      
+      radioFormat = document.querySelector('input[name="radioFormat"]:checked').value;
+
+      if (radioFormat == 'json'){
+        readJSON(choix);
+      }
+      else{
+        readXML(choix)
+      }
+			
 			
 	 
 	 }
@@ -127,12 +143,8 @@ function envoie()
 
 
 
-function jsonDown(){ 
-  return 
-}
-function xmlDown(){
-  return 
-}
+
+
 	  
 </script>
 
