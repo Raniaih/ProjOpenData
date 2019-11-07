@@ -47,15 +47,19 @@
 		</SELECT>
 	</FORM>
 	</div>
-  <div class="grid-item item2">Image de la ville/pays</div>
+  <div class="grid-item item2">Image de la ville/pays <br>    <img id="flag" src="">    </div> 
+  
   <div class="grid-item item3">Capital</div>  
   <div class="grid-item item4" id="villes"></div>
   <div class="grid-item item5" id="indic">Weather</div>
+    
 </div>
 
 </FORM>
 
 <script> 
+var dico2={};
+var meteo;
 var indicateur="";
 var dico ={};	 
 var url= 'http://localhost:3000/villes';
@@ -72,6 +76,7 @@ fetch(url,{
 						option.textContent=country[i]["name"];
 						document.getElementById("country").appendChild(option);
 						 dico[country[i]["name"]]=country[i]["capital"];
+						  
 					}
 	 
   
@@ -101,8 +106,8 @@ fetch(url,myInit)
 		 option.setAttributeNode(a);
 		 option.textContent=country[i]["name"];
 		 document.getElementById("country").appendChild(option);
-		  dico[country[i]["name"]]=country[i]["capital"];
-		//a.push(country[i]["name"]);
+		 dico[country[i]["name"]]=country[i]["capital"] ;
+		 dico2[ country[i]["name"] ]=country[i]["alpha2Code"].toLowerCase();
 		}
 	 
   
@@ -117,18 +122,24 @@ fetch(url,myInit)
 	
 function envoie() 
 		{ 
+			 var choix =  document.getElementById("country").value;
+			 var flag = "https://www.countryflags.io/"+dico2[choix]+"/flat/64.png";
+			 var h1 = document.getElementsByTagName("img")[0]; 
+			 var att = document.createAttribute("src"); 
+			 att.value = flag; 
+			 h1.setAttributeNode(att);
 			 ///fonction qui envoie le choix de l'utilisateur au serveur local qui écoute sur le port 3000 
 			document.getElementById("indic").textContent="";
-			var choix =  document.getElementById("country").value;
+			document.getElementById("villes").textContent="";
 			document.getElementById("villes").textContent= dico[choix];
 		
 			fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(function(res){
 				 res.json().then(data=> document.getElementById("indic").textContent="At  "+ convert(data["currently"]["time"])+ ". Summary: "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"]        )
+							
 			});
 			
 	 
 	 }
-	  
 	  
 </script>
 
