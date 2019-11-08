@@ -109,11 +109,12 @@
 
   </section>
 <script> 
+const port = process.env.PORT || 3000
 var dico2={};
 var meteo;
 var indicateur="";
 var dico ={};	 
-var url= 'http://localhost:3000/villes';
+var url= 'http://localhost:'+port+'/villes';
 fetch(url,{ 
 	method : 'GET'})
 
@@ -143,7 +144,7 @@ fetch(url,{
 	 
 
 function readJSON(choix){ 
-  return fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'application/json'}}).then(function(res){
+  return fetch("http://localhost:"+port+"/villes/"+choix, {method : 'GET', headers: { 'accept' : 'application/json'}}).then(function(res){
           res.json().then(data=> document.getElementById("indic").textContent="We are "+ convert(data["currently"]["time"])+ ". Summary "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"] +" and temperature is  "+data["currently"]["temperature"]        )
 					
 			});
@@ -154,7 +155,7 @@ function readXML(choix){
 
   parser = new DOMParser();
   
-  return fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(response =>
+  return fetch("http://localhost:"+port+"/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(response =>
     response.text()).then(res => 
         res = '<root> ' + res  + ' </root>'
     ).then(data =>document.getElementById("indic").textContent= " We are  " +convert(($($.parseXML(data)).find("time").first().text()  ) )+". Summary "+($($.parseXML(data)).find("summary").first().text()  ) +" . And humidity  is "+ ($($.parseXML(data)).find("humidity").first().text() +" and temperature is " +($($.parseXML(data)).find("temperature").first().text()          )  ))   ;
