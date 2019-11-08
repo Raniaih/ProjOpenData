@@ -1,6 +1,7 @@
+const port = process.env.PORT || 80
+
 var express = require('express');
 var hostname = 'localhost';
-var port = process.env.PORT || 80
 const fetch = require('node-fetch');
 const path = require('path');
 var convert = require('xml-js');
@@ -111,7 +112,7 @@ app.get('/villes/:ville', function(req, res){
 }) ;
 
 
-app.listen(port, hostname, function(){
+app.listen(port,  function(){
     console.log("Le serveur tourne sur http://"+ hostname +":"+ port +"\n")
 });
 
