@@ -18,7 +18,7 @@ function fetchCountryJson(location = 'Tunisia'){
         
             method: "GET",
             headers: {
-                "fbclid": "IwAR31ioi18aNteQ_PMek9Zg6Z2K_YJpaa_vE05nrJKVszR1I00iKcVh4GhVU",
+                "fbclid": process.env.ID_COUNTRY,
                 'Content-Type': 'application/json'
             },
         })
