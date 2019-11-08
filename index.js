@@ -1,6 +1,6 @@
 var express = require('express');
 var hostname = 'localhost';
-var port = 3000 ; 
+var port = process.env.PORT 
 const fetch = require('node-fetch');
 const path = require('path');
 var convert = require('xml-js');
