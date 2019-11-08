@@ -3,8 +3,8 @@
 Le but du projet est de concevoir une API qui résulte d'un mashup entre deux API tierces. Cette API doit retourner une réponse dans un temps acceptable et doit pouvoir retourne la réponse sous deux formats différents.
 Nous avons concu une API qui, avec le nom d'un pays en paramètre, récupère les coordonnées gps de sa capitale dans une première API dans le but de les croiser avec la seconde API et d'obtenir la météo.
 
-( Création d'une interface donnant la possibilité de visualiser la capitale d'un pays selon notre choix. 
-En choisissant le pays, nous avons non seulement l'information sur sa capital, mais aussi la météo de cette dérnière et l'image. ) A revoir
+Coté client: Création d'une interface donnant la possibilité de visualiser la capitale d'un pays selon notre choix. 
+En choisissant le pays, nous avons non seulement l'information sur sa capital, mais aussi la météo de cette dérnière et l'image.
 
 # Source de données
 
@@ -22,5 +22,8 @@ Communication Client-Serveur/ Serveur-Client.
 Imaginer tous les cas d'utilisations clients.
 Convertion des résultats en XML. 
 Travailler côté serveur sachant qu'on a plus l'habitude de travailler côté client.
-Adapter le CSS/Bootstrap en Node.js. (Faux) 
+Configurer Node.js pour afficher les fichiers statiques. 
+
+
 # URL Heroku
+weatherworldavailable.herokuapp.com
