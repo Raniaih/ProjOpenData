@@ -6,6 +6,11 @@ Nous avons concu une API qui, avec le nom d'un pays en paramètre, récupère le
 Coté client: Création d'une interface donnant la possibilité de visualiser la capitale d'un pays selon notre choix. 
 En choisissant le pays, nous avons non seulement l'information sur sa capital, mais aussi la météo de cette dérnière et l'image.
 
+##GET
+
+Requete par pays : '/villes/:Pays'
+On récupère le nom du Pays qui servira d'argument de requête à la première api. Celle-ci nous renvoie des informations sur le Pays en question (Capital, coordonées gps ..). Les coordonnées gps sont prise comme argument par la deuxième API qui nous retourne la météo de la capitale. 
+
 # Source de données
 
 API Pays/Villes: https://restcountries.eu/rest/v2/all 
