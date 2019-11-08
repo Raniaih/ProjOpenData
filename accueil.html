@@ -33,21 +33,30 @@
 						<div class="content">
 
 							<!-- Elements -->
-							<h4 align="center"><i class="em em-barely_sunny" aria-role="presentation" aria-label=""></i>Let's find out together if the weather is nice today (or not) and much more! </h4>
+							<h3 align="center"><i class="em em-barely_sunny" aria-role="presentation" aria-label=""></i>Let's find out together if the weather is nice today (or not) and much more! </h3>
 								<h2 id="elements">Choose a country </h2>
 								<div class="row 200%">
 									<div class="6u 12u$(medium)">
+<div class="row">
+	<div class="6u 12u$(medium)">
 <FORM  NAME="Choix">
 		<SELECT name="country" id="country" size="1" onChange="envoie()">
 		</SELECT>
-	</FORM>
+	
 
 										<!-- Text stuff -->
+											<div style="position:absolute; left:1000px; top:350px;">
 											
+											<h2>Country Flag</h2>
+											
+					<span class="image fit"><img  alt="" /></span>
+<hr />
+					</div>		
+											
+											</FORM>
 											<hr />
-											<h2>Show flag</h2>
-					<span class="image fit"><img  alt="" /></span>		
-											<hr />
+</div>
+</div>
 
 										<!-- Lists -->
 											<h2>capital informations</h2>
@@ -56,12 +65,12 @@
 
 													<h3>Name capital</h3>
 													
-<div class="grid-item item4" id="villes"></div>
+<h4><div class="grid-item item4" id="villes"></div><h4>
 												</div>
 												<div class="6u$ 12u$(small)">
 
 													<h3>Weather tracker</h3>
-													<div class="grid-item item5" id="indic"></div>	
+													<h4><div class="grid-item item5" id="indic"></div>	<h4>
 
 												</div>
 											</div>
@@ -73,15 +82,12 @@
 									
 											<ul class="actions">
 												
-												<li><a href="#" class="button icon fa-download">JSON</a></li>
-												<li><a href="#" class="button icon fa-download">CSV</a></li>
+												<li   onclick="envoie();"><a href="#" class="button icon fa-download">JSON</a></li>
+												<li  onclick="envoie2();"><a href="#" class="button icon fa-download">XLM</a></li>
 												
 											</ul>
 											
-											<FORM>
-  <INPUT type= "radio" name="radioFormat" value="json" onclick="envoie()" checked="checked"> json </INPUT>
-  <INPUT type= "radio"  name="radioFormat" value="xml" onclick="envoie()" > xml </INPUT>
-  </FORM>
+											 
 										
 												</div>
 											</div>
@@ -138,7 +144,7 @@ fetch(url,{
 
 function readJSON(choix){ 
   return fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'application/json'}}).then(function(res){
-          res.json().then(data=> document.getElementById("indic").textContent="At  "+ convert(data["currently"]["time"])+ ". Summary: "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"]        )
+          res.json().then(data=> document.getElementById("indic").textContent="We are "+ convert(data["currently"]["time"])+ ". Summary "+data["currently"]["summary"]  +" . And humidity  is "+ data["currently"]["humidity"] +" and temperature is  "+data["currently"]["temperature"]        )
 					
 			});
   
@@ -151,7 +157,7 @@ function readXML(choix){
   return fetch("http://localhost:3000/villes/"+choix, {method : 'GET', headers: { 'accept' : 'text/xml'}}).then(response =>
     response.text()).then(res => 
         res = '<root> ' + res  + ' </root>'
-    ).then(data =>                typeof(data)                      )     ;
+    ).then(data =>document.getElementById("indic").textContent= " We are  " +convert(($($.parseXML(data)).find("time").first().text()  ) )+". Summary "+($($.parseXML(data)).find("summary").first().text()  ) +" . And humidity  is "+ ($($.parseXML(data)).find("humidity").first().text() +" and temperature is " +($($.parseXML(data)).find("temperature").first().text()          )  ))   ;
 					
 			
 }
@@ -168,14 +174,31 @@ function envoie()
 			document.getElementById("villes").textContent="";
 			document.getElementById("villes").textContent= dico[choix];
       
-      radioFormat = document.querySelector('input[name="radioFormat"]:checked').value;
-
-      if (radioFormat == 'json'){
+       
+ 
         readJSON(choix);
-      }
-      else{
+      
+	 
+	 }
+	 
+	 
+function envoie2() 
+		{ 
+			 var choix =  document.getElementById("country").value;
+			 var flag = "https://www.countryflags.io/"+dico2[choix]+"/flat/64.png";
+			 var h1 = document.getElementsByTagName("img")[0]; 
+			 var att = document.createAttribute("src"); 
+			 att.value = flag; 
+			 h1.setAttributeNode(att);
+			 ///fonction qui envoie le choix de l'utilisateur au serveur local qui écoute sur le port 3000 
+			document.getElementById("indic").textContent="";
+			document.getElementById("villes").textContent="";
+			document.getElementById("villes").textContent= dico[choix];
+      
+        
+      
         readXML(choix);
-      }
+      
 			
 			
 	 
