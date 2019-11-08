@@ -1,4 +1,4 @@
-const port = process.env.PORT || 80
+const port = process.env.PORT || 3000
 
 var express = require('express');
 var hostname = 'localhost';
@@ -54,7 +54,7 @@ function fetchWeatherJson(latlng){
 
 
 app.get('/', function(req, res){
-    res.sendFile(path.join(__dirname + '/accueil.html'))
+    res.sendFile(path.join(__dirname + '/accueil.html'));
 });
 
 function fetchListePays(){
