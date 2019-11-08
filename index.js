@@ -6,8 +6,11 @@ const fetch = require('node-fetch');
 const path = require('path');
 var convert = require('xml-js');
 var app = express();
+var cors = require('cors');
 var fs= require('fs');
 
+
+app.use(cors());
 
 function fetchCountryJson(location = 'Tunisia'){
     
